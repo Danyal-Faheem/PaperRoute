@@ -1,0 +1,37 @@
+services:
+  paperroute:
+    build: .
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      PAPERROUTE_DATABASE: data/runtime/paperroute.sqlite3
+      PAPERROUTE_CACHE_DIR: data/papers
+      PAPERROUTE_DEMO_MODE: ${PAPERROUTE_DEMO_MODE:-false}
+      PAPERROUTE_EVALUATION_PATH: ${PAPERROUTE_EVALUATION_PATH:-data/runtime/latest-evaluation.json}
+      PAPERROUTE_OPENAI_BASE_URL: ${PAPERROUTE_OPENAI_BASE_URL:-}
+      PAPERROUTE_API_KEY: ${PAPERROUTE_API_KEY:-}
+      PAPERROUTE_SOLVER_MODEL: ${PAPERROUTE_SOLVER_MODEL:-gpt-5.6-terra}
+      PAPERROUTE_JUDGE_MODEL: ${PAPERROUTE_JUDGE_MODEL:-gpt-5.6}
+      PAPERROUTE_TIMEOUT: ${PAPERROUTE_TIMEOUT:-300}
+      PAPERROUTE_PDF_TEXT_LIMIT: ${PAPERROUTE_PDF_TEXT_LIMIT:-60000}
+    ports:
+      - "8000:8000"
+    volumes:
+      - paperroute-runtime:/app/data/runtime
+      - paperroute-papers:/app/data/papers
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/healthz', timeout=3)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  paperroute-runtime:
+  paperroute-papers:

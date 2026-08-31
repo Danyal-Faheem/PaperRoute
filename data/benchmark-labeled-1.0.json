@@ -1,0 +1,317 @@
+{
+  "version": "1.0",
+  "description": "Frozen PaperRoute literature-triage benchmark for graduate-student research questions.",
+  "frozen_at": "2026-08-28",
+  "source": "arXiv public metadata and PDFs",
+  "judge": {
+    "model": "gpt-5.6",
+    "scale": {
+      "0": "not useful",
+      "1": "tangential",
+      "2": "useful background",
+      "3": "directly useful"
+    },
+    "independent_passes": 2,
+    "tie_breaker_pass": 3,
+    "labels_frozen": true,
+    "label_status": "Frozen by evaluation runner",
+    "diagnostics": {
+      "available": true,
+      "paired_judgments": 60,
+      "agreements": 60,
+      "disagreements": 0,
+      "tie_breaks": 0,
+      "agreement_rate": 1.0,
+      "passes": 2,
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "temperature": 0.1,
+      "seed_controls_applied": true,
+      "temperature_controls_applied": true,
+      "model": "unsloth/Qwen3.8-27B-GGUF:UD-Q4_K_XL",
+      "source": "generated"
+    },
+    "label_generation": {
+      "generated_at": "2026-08-28T18:28:54.812580+00:00",
+      "source": "two-pass-plus-tie-break",
+      "model": "unsloth/Qwen3.8-27B-GGUF:UD-Q4_K_XL"
+    }
+  },
+  "cases": [
+    {
+      "id": "case-01",
+      "question": "How can attention-based models be used for neural machine translation?",
+      "include": [
+        "attention",
+        "neural machine translation"
+      ],
+      "exclude": [
+        "non-neural statistical translation"
+      ],
+      "arxiv_ids": [
+        "1706.03762",
+        "1409.0473",
+        "1508.04025",
+        "1609.08144",
+        "1810.04805",
+        "2005.14165"
+      ]
+    },
+    {
+      "id": "case-02",
+      "question": "What methods improve factuality and reduce hallucination in large language models?",
+      "include": [
+        "language models",
+        "factuality or hallucination evaluation"
+      ],
+      "exclude": [
+        "image-only generation"
+      ],
+      "arxiv_ids": [
+        "2303.08774",
+        "2305.14251",
+        "2310.06825",
+        "2309.11495",
+        "2005.11401",
+        "2202.08906"
+      ]
+    },
+    {
+      "id": "case-03",
+      "question": "Which approaches make reinforcement learning more sample efficient?",
+      "include": [
+        "reinforcement learning",
+        "sample efficiency"
+      ],
+      "exclude": [
+        "supervised learning without an RL environment"
+      ],
+      "arxiv_ids": [
+        "1312.5602",
+        "1509.02971",
+        "1611.01224",
+        "1706.10295",
+        "1812.05905",
+        "2106.09685"
+      ]
+    },
+    {
+      "id": "case-04",
+      "question": "How do graph neural networks represent relational data?",
+      "include": [
+        "graph neural network",
+        "message passing or graph representation"
+      ],
+      "exclude": [
+        "image convolution without graphs"
+      ],
+      "arxiv_ids": [
+        "1609.02907",
+        "1704.01212",
+        "1806.01261",
+        "1810.00826",
+        "2006.04131",
+        "2106.05234"
+      ]
+    },
+    {
+      "id": "case-05",
+      "question": "What privacy-preserving techniques are practical for federated learning?",
+      "include": [
+        "federated learning",
+        "privacy"
+      ],
+      "exclude": [
+        "centralized training only"
+      ],
+      "arxiv_ids": [
+        "1602.05629",
+        "1702.05811",
+        "1812.02903",
+        "1902.01046",
+        "2003.00295",
+        "2106.08210"
+      ]
+    },
+    {
+      "id": "case-06",
+      "question": "How are diffusion models used for image generation?",
+      "include": [
+        "diffusion model",
+        "image generation"
+      ],
+      "exclude": [
+        "text classification"
+      ],
+      "arxiv_ids": [
+        "1503.03585",
+        "2006.11239",
+        "2105.05233",
+        "2112.10752",
+        "2206.00364",
+        "2302.05543"
+      ]
+    },
+    {
+      "id": "case-07",
+      "question": "What techniques improve calibration and uncertainty estimates in deep neural networks?",
+      "include": [
+        "neural network",
+        "calibration or uncertainty"
+      ],
+      "exclude": [
+        "uncertainty unrelated to predictive models"
+      ],
+      "arxiv_ids": [
+        "1706.04599",
+        "1807.00263",
+        "1906.02543",
+        "2002.08792",
+        "2106.10199",
+        "2205.10542"
+      ]
+    },
+    {
+      "id": "case-08",
+      "question": "How can retrieval-augmented generation ground language-model answers in evidence?",
+      "include": [
+        "retrieval augmented generation",
+        "language model grounding"
+      ],
+      "exclude": [
+        "retrieval without generation"
+      ],
+      "arxiv_ids": [
+        "2005.11401",
+        "2004.04906",
+        "2112.04426",
+        "2212.10496",
+        "2307.03172",
+        "2401.00368"
+      ]
+    },
+    {
+      "id": "case-09",
+      "question": "Which methods detect distribution shift in deployed machine-learning systems?",
+      "include": [
+        "distribution shift or out-of-distribution detection",
+        "machine learning"
+      ],
+      "exclude": [
+        "dataset compression only"
+      ],
+      "arxiv_ids": [
+        "1610.02136",
+        "1706.02690",
+        "1805.12233",
+        "1906.02543",
+        "2006.09361",
+        "2103.03289"
+      ]
+    },
+    {
+      "id": "case-10",
+      "question": "What makes speech recognition robust to noisy and accented audio?",
+      "include": [
+        "automatic speech recognition",
+        "noise or accent robustness"
+      ],
+      "exclude": [
+        "text-only language modeling"
+      ],
+      "arxiv_ids": [
+        "1303.5778",
+        "1508.01211",
+        "1609.06773",
+        "1803.05455",
+        "1911.03912",
+        "2106.04624"
+      ]
+    }
+  ],
+  "labels": {
+    "case-01": {
+      "1706.03762": 3.0,
+      "1409.0473": 3.0,
+      "1508.04025": 3.0,
+      "1609.08144": 3.0,
+      "1810.04805": 1.0,
+      "2005.14165": 1.0
+    },
+    "case-02": {
+      "2303.08774": 2.0,
+      "2305.14251": 3.0,
+      "2310.06825": 0.0,
+      "2309.11495": 3.0,
+      "2005.11401": 3.0,
+      "2202.08906": 0.0
+    },
+    "case-03": {
+      "1312.5602": 1.0,
+      "1509.02971": 2.0,
+      "1611.01224": 3.0,
+      "1706.10295": 3.0,
+      "1812.05905": 3.0,
+      "2106.09685": 0.0
+    },
+    "case-04": {
+      "1609.02907": 3.0,
+      "1704.01212": 3.0,
+      "1806.01261": 3.0,
+      "1810.00826": 3.0,
+      "2006.04131": 3.0,
+      "2106.05234": 3.0
+    },
+    "case-05": {
+      "1602.05629": 2.0,
+      "1702.05811": 0.0,
+      "1812.02903": 2.0,
+      "1902.01046": 2.0,
+      "2003.00295": 1.0,
+      "2106.08210": 0.0
+    },
+    "case-06": {
+      "1503.03585": 3.0,
+      "2006.11239": 3.0,
+      "2105.05233": 3.0,
+      "2112.10752": 3.0,
+      "2206.00364": 3.0,
+      "2302.05543": 3.0
+    },
+    "case-07": {
+      "1706.04599": 3.0,
+      "1807.00263": 3.0,
+      "1906.02543": 0.0,
+      "2002.08792": 0.0,
+      "2106.10199": 0.0,
+      "2205.10542": 0.0
+    },
+    "case-08": {
+      "2005.11401": 3.0,
+      "2004.04906": 2.0,
+      "2112.04426": 3.0,
+      "2212.10496": 2.0,
+      "2307.03172": 2.0,
+      "2401.00368": 1.0
+    },
+    "case-09": {
+      "1610.02136": 3.0,
+      "1706.02690": 3.0,
+      "1805.12233": 0.0,
+      "1906.02543": 0.0,
+      "2006.09361": 0.0,
+      "2103.03289": 0.0
+    },
+    "case-10": {
+      "1303.5778": 1.0,
+      "1508.01211": 1.0,
+      "1609.06773": 3.0,
+      "1803.05455": 0.0,
+      "1911.03912": 1.0,
+      "2106.04624": 1.0
+    }
+  }
+}

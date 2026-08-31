@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}New triage · PaperRoute{% endblock %}
+{% block content %}
+{% set form_data = form|default({}) %}
+{% set warning_data = configuration_warning|default({}) %}
+{% set warning_text = warning_data.message|default(warning_data|string) %}
+{% set warning_code = warning_data.code|default(warning_data.kind|default(''))|string|lower %}
+{% set warning_lower = warning_text|string|lower %}
+{% set missing_key = warning_code in ['missing_openai_api_key', 'missing_api_key'] or 'openai_api_key' in warning_lower or 'api key' in warning_lower %}
+{% set explicit_demo = demo_mode|default(false) or warning_data.mode|default('')|string|lower == 'demo' or warning_code in ['demo', 'demo_mode'] or ('demo mode' in warning_lower and not missing_key) %}
+{% set selected_categories = form_data.categories|default(['cs.AI', 'cs.CL'], true) %}
+<section class="hero shell">
+  <div class="hero-copy">
+    <p class="eyebrow"><span class="eyebrow-dot"></span> literature triage, with receipts</p>
+    <h1>Find the papers<br><em>worth your time.</em></h1>
+    <p class="hero-lede">PaperRoute turns a research question into a ranked reading list — with page-level evidence for every recommendation.</p>
+    <div class="trust-line" aria-label="PaperRoute workflow">
+      <span><b>01</b> Search</span><span class="trust-rule"></span><span><b>02</b> Verify</span><span class="trust-rule"></span><span><b>03</b> Prioritize</span>
+    </div>
+  </div>
+  <div class="hero-note">
+    <span class="note-label">A better first pass</span>
+    <p>Spend your attention where it can move the work forward. Every signal is paired with a quotation, page number, and limitation.</p>
+    <span class="note-scribble" aria-hidden="true">↗</span>
+  </div>
+</section>
+
+<section class="shell form-section" aria-labelledby="new-triage-heading">
+  <div class="section-heading">
+    <div><p class="eyebrow">Start a run</p><h2 id="new-triage-heading">Tell us what you’re looking for</h2></div>
+    <p class="required-note"><span aria-hidden="true">*</span> Required</p>
+  </div>
+  {% if configuration_warning %}<div class="alert alert-warning" role="status"><span class="alert-icon">i</span><div>{% if explicit_demo %}<strong>Demo mode is active.</strong><p>This workspace uses deterministic local responses and will not call a model. Set <code>PAPERROUTE_DEMO_MODE=0</code> and configure <code>OPENAI_API_KEY</code>, <code>PAPERROUTE_API_KEY</code>, or <code>PAPERROUTE_OPENAI_BASE_URL</code> for live model runs.</p>{% elif missing_key %}<strong>Live model is not configured.</strong><p>No hosted or compatible model credentials are configured, so runs use the local deterministic demo. Add <code>OPENAI_API_KEY</code>, <code>PAPERROUTE_API_KEY</code>, or <code>PAPERROUTE_OPENAI_BASE_URL</code> to <code>.env</code> to enable live model analysis.</p>{% else %}<strong>Configuration notice.</strong><p>{{ warning_text }}</p>{% endif %}</div></div>{% endif %}
+  {% if error %}<div class="alert alert-error" role="alert"><span class="alert-icon">!</span><div><strong>We couldn’t start that run.</strong><p>{{ error }}</p></div></div>{% endif %}
+  <form class="triage-form" method="post" action="{{ form_action|default('/runs') }}">
+    <div class="field field-wide">
+      <label for="research-question">Research question <span class="required" aria-hidden="true">*</span></label>
+      <span class="field-help">Be specific about the task, method, or population you need to understand.</span>
+      <textarea id="research-question" name="research_question" rows="4" required minlength="12" placeholder="e.g. How do retrieval-augmented language models reduce factual errors in biomedical question answering?">{{ form_data.research_question|default('') }}</textarea>
+      <div class="field-foot"><span>Plain language is welcome</span><span data-count-for="research-question">0 / 1,000</span></div>
+    </div>
+    <div class="form-grid">
+      <div class="field"><label for="inclusion-criteria">Include <span class="required" aria-hidden="true">*</span></label><span class="field-help">What makes a paper useful?</span><textarea id="inclusion-criteria" name="inclusion_criteria" rows="5" required placeholder="e.g. Empirical evaluation; biomedical QA; published 2022 or later">{{ form_data.inclusion_criteria|default('') }}</textarea></div>
+      <div class="field"><label for="exclusion-criteria">Exclude</label><span class="field-help">Hard boundaries for this reading list.</span><textarea id="exclusion-criteria" name="exclusion_criteria" rows="5" placeholder="e.g. Opinion pieces; non-English papers; toy datasets">{{ form_data.exclusion_criteria|default('') }}</textarea></div>
+    </div>
+    <fieldset class="field-group"><legend>Search scope</legend><div class="form-grid scope-grid">
+      <div class="field"><label for="categories">arXiv categories</label><span id="categories-help" class="field-help">Choose one or more areas. Hold Command (Mac) or Ctrl (Windows/Linux) while selecting.</span><select id="categories" name="categories" multiple size="8" aria-describedby="categories-help"><optgroup label="Computer Science"><option value="cs.AI"{% if 'cs.AI' in selected_categories %} selected{% endif %}>cs.AI — Artificial intelligence</option><option value="cs.AR"{% if 'cs.AR' in selected_categories %} selected{% endif %}>cs.AR — Hardware architecture</option><option value="cs.CL"{% if 'cs.CL' in selected_categories %} selected{% endif %}>cs.CL — Computation and language</option><option value="cs.CR"{% if 'cs.CR' in selected_categories %} selected{% endif %}>cs.CR — Cryptography and security</option><option value="cs.CV"{% if 'cs.CV' in selected_categories %} selected{% endif %}>cs.CV — Computer vision</option><option value="cs.DC"{% if 'cs.DC' in selected_categories %} selected{% endif %}>cs.DC — Distributed computing</option><option value="cs.DS"{% if 'cs.DS' in selected_categories %} selected{% endif %}>cs.DS — Data structures and algorithms</option><option value="cs.HC"{% if 'cs.HC' in selected_categories %} selected{% endif %}>cs.HC — Human-computer interaction</option><option value="cs.IR"{% if 'cs.IR' in selected_categories %} selected{% endif %}>cs.IR — Information retrieval</option><option value="cs.LG"{% if 'cs.LG' in selected_categories %} selected{% endif %}>cs.LG — Machine learning</option><option value="cs.NE"{% if 'cs.NE' in selected_categories %} selected{% endif %}>cs.NE — Neural and evolutionary computing</option><option value="cs.OS"{% if 'cs.OS' in selected_categories %} selected{% endif %}>cs.OS — Operating systems</option><option value="cs.PF"{% if 'cs.PF' in selected_categories %} selected{% endif %}>cs.PF — Performance</option><option value="cs.PL"{% if 'cs.PL' in selected_categories %} selected{% endif %}>cs.PL — Programming languages</option><option value="cs.RO"{% if 'cs.RO' in selected_categories %} selected{% endif %}>cs.RO — Robotics</option><option value="cs.SE"{% if 'cs.SE' in selected_categories %} selected{% endif %}>cs.SE — Software engineering</option></optgroup><optgroup label="Mathematics"><option value="math.CO"{% if 'math.CO' in selected_categories %} selected{% endif %}>math.CO — Combinatorics</option><option value="math.IT"{% if 'math.IT' in selected_categories %} selected{% endif %}>math.IT — Information theory</option><option value="math.NA"{% if 'math.NA' in selected_categories %} selected{% endif %}>math.NA — Numerical analysis</option><option value="math.OC"{% if 'math.OC' in selected_categories %} selected{% endif %}>math.OC — Optimization and control</option><option value="math.PR"{% if 'math.PR' in selected_categories %} selected{% endif %}>math.PR — Probability</option><option value="math.ST"{% if 'math.ST' in selected_categories %} selected{% endif %}>math.ST — Statistics theory</option></optgroup></select></div>
+      <div class="date-fields"><div class="field"><label for="date-from">From</label><input id="date-from" name="date_from" type="date" value="{{ form_data.date_from|default('') }}"></div><div class="date-arrow" aria-hidden="true">→</div><div class="field"><label for="date-to">To</label><input id="date-to" name="date_to" type="date" value="{{ form_data.date_to|default('') }}"></div></div>
+    </div></fieldset>
+    <div class="field"><label for="pinned-arxiv-ids">Pinned arXiv IDs <span class="optional">Optional</span></label><span class="field-help">Give us papers you already suspect belong in the conversation. One ID per line.</span><textarea id="pinned-arxiv-ids" name="pinned_arxiv_ids" rows="3" placeholder="2401.12345&#10;2310.06789">{{ form_data.pinned_arxiv_ids|default('') }}</textarea></div>
+    <div class="form-submit"><p class="privacy-note"><span class="lock-icon" aria-hidden="true">⌑</span> Public arXiv papers only. Your question and paper excerpts are sent to the configured model provider.</p><button class="button button-primary" type="submit">Build my reading list <span aria-hidden="true">↗</span></button></div>
+  </form>
+</section>
+<section class="shell how-section"><div class="section-heading"><div><p class="eyebrow">What happens next</p><h2>From question to confidence</h2></div></div><div class="how-grid"><article><span class="step-number">01</span><h3>Search &amp; shortlist</h3><p>We translate your question into focused arXiv queries and narrow the field to six promising papers.</p></article><article><span class="step-number">02</span><h3>Read the details</h3><p>Each candidate is assessed against your criteria, with claims grounded in the paper itself.</p></article><article><span class="step-number">03</span><h3>Choose your next read</h3><p>A transparent score and verified quotations make the recommendation easy to challenge.</p></article></div></section>
+{% endblock %}
+{% block scripts %}<script>document.addEventListener('input',function(e){var el=e.target;if(el.matches('textarea[name="research_question"]')){var c=document.querySelector('[data-count-for="research-question"]');if(c)c.textContent=el.value.length+' / 1,000';}});</script>{% endblock %}

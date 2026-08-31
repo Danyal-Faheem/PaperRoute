@@ -1,0 +1,6 @@
+{% if run is defined and run.status is defined %}{% set status_value = run.status.value|default(run.status) %}{% elif status is defined %}{% set status_value = status.value|default(status) %}{% else %}{% set status_value = 'queued' %}{% endif %}
+{% set status_value = status_value|string|lower %}
+<div id="run-status" {% if poll_url|default('') and status_value not in ['completed', 'complete', 'failed', 'error'] %}hx-get="{{ poll_url }}" hx-trigger="load, every 2s" hx-target="#run-status" hx-swap="outerHTML"{% endif %}>
+  {% include "_run_status.html" %}
+  {% if status_value in ['completed', 'complete', 'failed', 'error'] %}{% include "_results.html" %}{% endif %}
+</div>

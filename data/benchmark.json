@@ -1,0 +1,37 @@
+{
+  "version": "1.0",
+  "description": "Frozen PaperRoute literature-triage benchmark for graduate-student research questions.",
+  "frozen_at": "2026-08-28",
+  "source": "arXiv public metadata and PDFs",
+  "judge": {
+    "model": "gpt-5.6",
+    "scale": {"0": "not useful", "1": "tangential", "2": "useful background", "3": "directly useful"},
+    "independent_passes": 2,
+    "tie_breaker_pass": 3,
+    "labels_frozen": false,
+    "label_status": "Generate and freeze labels before reporting solver metrics"
+  },
+  "success_contract": {
+    "primary": "solver_mean_latency_seconds <= 0.8 * baseline_mean_latency_seconds",
+    "guardrails": {
+      "solver_ndcg_at_5_delta_min": -0.02,
+      "solver_read_now_verified_evidence_rate_min": 0.95,
+      "solver_read_now_evidence_total_min": 20,
+      "hydration_failures_max": 0,
+      "partial_case_count_max": 0
+    },
+    "supersedes_hypothesis": "+0.10 NDCG@5 improvement over baseline (failed initial hypothesis; retain in changelog)"
+  },
+  "cases": [
+    {"id": "case-01", "question": "How can attention-based models be used for neural machine translation?", "include": ["attention", "neural machine translation"], "exclude": ["non-neural statistical translation"], "arxiv_ids": ["1706.03762", "1409.0473", "1508.04025", "1609.08144", "1810.04805", "2005.14165"]},
+    {"id": "case-02", "question": "What methods improve factuality and reduce hallucination in large language models?", "include": ["language models", "factuality or hallucination evaluation"], "exclude": ["image-only generation"], "arxiv_ids": ["2303.08774", "2305.14251", "2310.06825", "2309.11495", "2005.11401", "2202.08906"]},
+    {"id": "case-03", "question": "Which approaches make reinforcement learning more sample efficient?", "include": ["reinforcement learning", "sample efficiency"], "exclude": ["supervised learning without an RL environment"], "arxiv_ids": ["1312.5602", "1509.02971", "1611.01224", "1706.10295", "1812.05905", "2106.09685"]},
+    {"id": "case-04", "question": "How do graph neural networks represent relational data?", "include": ["graph neural network", "message passing or graph representation"], "exclude": ["image convolution without graphs"], "arxiv_ids": ["1609.02907", "1704.01212", "1806.01261", "1810.00826", "2006.04131", "2106.05234"]},
+    {"id": "case-05", "question": "What privacy-preserving techniques are practical for federated learning?", "include": ["federated learning", "privacy"], "exclude": ["centralized training only"], "arxiv_ids": ["1602.05629", "1702.05811", "1812.02903", "1902.01046", "2003.00295", "2106.08210"]},
+    {"id": "case-06", "question": "How are diffusion models used for image generation?", "include": ["diffusion model", "image generation"], "exclude": ["text classification"], "arxiv_ids": ["1503.03585", "2006.11239", "2105.05233", "2112.10752", "2206.00364", "2302.05543"]},
+    {"id": "case-07", "question": "What techniques improve calibration and uncertainty estimates in deep neural networks?", "include": ["neural network", "calibration or uncertainty"], "exclude": ["uncertainty unrelated to predictive models"], "arxiv_ids": ["1706.04599", "1807.00263", "1906.02543", "2002.08792", "2106.10199", "2205.10542"]},
+    {"id": "case-08", "question": "How can retrieval-augmented generation ground language-model answers in evidence?", "include": ["retrieval augmented generation", "language model grounding"], "exclude": ["retrieval without generation"], "arxiv_ids": ["2005.11401", "2004.04906", "2112.04426", "2212.10496", "2307.03172", "2401.00368"]},
+    {"id": "case-09", "question": "Which methods detect distribution shift in deployed machine-learning systems?", "include": ["distribution shift or out-of-distribution detection", "machine learning"], "exclude": ["dataset compression only"], "arxiv_ids": ["1610.02136", "1706.02690", "1805.12233", "1906.02543", "2006.09361", "2103.03289"]},
+    {"id": "case-10", "question": "What makes speech recognition robust to noisy and accented audio?", "include": ["automatic speech recognition", "noise or accent robustness"], "exclude": ["text-only language modeling"], "arxiv_ids": ["1303.5778", "1508.01211", "1609.06773", "1803.05455", "1911.03912", "2106.04624"]}
+  ]
+}

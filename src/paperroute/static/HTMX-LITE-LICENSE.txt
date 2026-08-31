@@ -1,0 +1,1 @@
+PaperRoute includes `htmx-lite.js`, an original, dependency-free implementation of the small polling behavior required by this application. It is not the htmx project and does not include htmx source code. No external runtime CDN is required.

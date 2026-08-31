@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PaperRoute evaluation result",
+  "type": "object",
+  "required": ["evaluation_version", "generated_at", "manifest_version", "labels_source", "cases", "solver", "baseline", "metrics"],
+  "properties": {
+    "evaluation_version": {"type": "string"},
+    "generated_at": {"type": "string", "format": "date-time"},
+    "manifest_version": {"type": "string"},
+    "labels_source": {"type": "string"},
+    "labels": {"type": "object"},
+    "solver_model": {"type": "string"},
+    "judge_model": {"type": "string"},
+    "judge_diagnostics": {"$ref": "#/$defs/judge_diagnostics"},
+    "prompt_hashes": {"type": "object", "additionalProperties": {"type": "string"}},
+    "retries": {"type": "integer", "minimum": 0},
+    "cases": {"type": "array", "minItems": 10, "maxItems": 10, "items": {"$ref": "#/$defs/full_case"}},
+    "solver": {"$ref": "#/$defs/run"},
+    "baseline": {"$ref": "#/$defs/run"},
+    "metrics": {"type": "object", "additionalProperties": {"type": "number"}}
+  },
+  "$defs": {
+    "run": {
+      "type": "object",
+      "required": ["model", "cases"],
+      "properties": {
+        "model": {"type": "string"},
+        "prompt_sha256": {"type": "string"},
+        "cases": {"type": "array", "items": {"$ref": "#/$defs/case"}}
+      }
+    },
+    "case": {
+      "type": "object",
+      "required": ["case_id", "ranked_papers"],
+      "properties": {
+        "case_id": {"type": "string"},
+        "ranked_papers": {"type": "array", "items": {"type": "string"}},
+        "ndcg_at_5": {"type": "number", "minimum": 0, "maximum": 1},
+        "verified_evidence_rate": {"type": "number", "minimum": 0, "maximum": 1},
+        "read_now_evidence_verified": {"type": "integer", "minimum": 0},
+        "read_now_evidence_total": {"type": "integer", "minimum": 0},
+        "latency_seconds": {"type": "number", "minimum": 0},
+        "input_tokens": {"type": "integer", "minimum": 0},
+        "output_tokens": {"type": "integer", "minimum": 0},
+        "estimated_cost_usd": {"type": "number", "minimum": 0}
+      }
+    },
+    "full_case": {
+      "type": "object",
+      "required": ["case_id", "papers", "baseline", "solver", "failures", "retry_count"],
+      "properties": {
+        "case_id": {"type": "string"},
+        "papers": {"type": "array", "minItems": 0, "items": {"type": "object", "required": ["arxiv_id", "sha256"]}},
+        "baseline": {"$ref": "#/$defs/case_run"},
+        "solver": {"$ref": "#/$defs/case_run"},
+        "failures": {"type": "array", "items": {"type": "object"}},
+        "retry_count": {"type": "integer", "minimum": 0}
+      }
+    },
+    "case_run": {
+      "type": "object",
+      "required": ["model", "ranked_papers", "assessments", "errors", "latency_seconds", "ndcg_at_5"],
+      "properties": {
+        "model": {"type": "string"},
+        "ranked_papers": {"type": "array", "items": {"type": "string"}},
+        "assessments": {"type": "array"},
+        "errors": {"type": "array"},
+        "latency_seconds": {"type": "number", "minimum": 0},
+        "input_tokens": {"type": "integer", "minimum": 0},
+        "output_tokens": {"type": "integer", "minimum": 0},
+        "total_tokens": {"type": "integer", "minimum": 0},
+        "retry_count": {"type": "integer", "minimum": 0},
+        "verified_evidence_rate": {"type": "number", "minimum": 0, "maximum": 1},
+        "read_now_evidence_verified": {"type": "integer", "minimum": 0},
+        "read_now_evidence_total": {"type": "integer", "minimum": 0},
+        "ndcg_at_5": {"type": "number", "minimum": 0, "maximum": 1},
+        "estimated_cost_usd": {"type": "number", "minimum": 0}
+      }
+    },
+    "judge_diagnostics": {
+      "type": "object",
+      "properties": {
+        "available": {"type": "boolean"},
+        "source": {"type": "string"},
+        "model": {"type": "string"},
+        "paired_judgments": {"type": "integer", "minimum": 0},
+        "agreements": {"type": "integer", "minimum": 0},
+        "disagreements": {"type": "integer", "minimum": 0},
+        "tie_breaks": {"type": "integer", "minimum": 0},
+        "agreement_rate": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "passes": {"type": "integer", "minimum": 0},
+        "seeds": {"type": "array", "items": {"type": "integer"}},
+        "temperature": {"type": ["number", "null"], "minimum": 0},
+        "reason": {"type": "string"}
+      },
+      "additionalProperties": true
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}{{ run.title|default('Reading list') }} · PaperRoute{% endblock %}
+{% block content %}
+{% set request_data = run.request|default({}) %}
+<section class="run-header shell">
+  <a class="back-link" href="/">← New triage</a>
+  <div class="run-header-row"><div><p class="eyebrow">Triage run <span class="run-id">#{{ run.id|default(run_id)|string|truncate(12, True, '') }}</span></p><h1>{{ run.title|default(run.research_question|default(request_data.research_question|default('Your reading list'))) }}</h1></div>{% if run.created_at %}<time class="run-date" datetime="{{ run.created_at }}">{{ run.created_at }}</time>{% endif %}</div>
+  <div class="run-query"><span class="query-label">Question</span><p>{{ run.research_question|default(request_data.research_question|default(research_question|default(''))) }}</p></div>
+</section>
+<section class="shell run-body">
+  {% include "run_status.html" %}
+</section>
+{% endblock %}

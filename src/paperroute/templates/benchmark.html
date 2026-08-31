@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block title %}Evaluation · PaperRoute{% endblock %}
+{% block content %}
+<section class="benchmark-hero shell"><p class="eyebrow">Evaluation lab</p><h1>Does the workflow<br><em>earn its complexity?</em></h1><p>PaperRoute is measured against a direct-prompt baseline on the same fixed cases, papers, and rubric.</p></section>
+<section class="shell benchmark-body">{% include "_benchmark.html" %}</section>
+{% endblock %}

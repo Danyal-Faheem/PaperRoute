@@ -1,0 +1,71 @@
+{
+  "evaluation_version": "1.0",
+  "status": "completed",
+  "contract": {
+    "cases": 10,
+    "papers_per_case": 6,
+    "primary_metric": "mean_wall_clock_latency_reduction",
+    "latency_target_reduction": 0.2,
+    "guardrails": {
+      "solver_ndcg_drop_max": 0.02,
+      "read_now_evidence_verified_min": 0.95,
+      "read_now_evidence_items_min": 20,
+      "hydration_failures_max": 0,
+      "partial_cases_max": 0
+    },
+    "math": {
+      "latency_reduction": "(187.082 - 106.586) / 187.082 = 0.4303",
+      "token_reduction": "(987578 - 830575) / 987578 = 0.1590",
+      "ndcg_delta": "0.9957 - 0.9970 = -0.0013",
+      "evidence_rate": "80 / 80 = 1.0000"
+    },
+    "result": "PASS: latency, NDCG guardrail, evidence, hydration, and partial-run criteria all pass."
+  },
+  "final": {
+    "generated_at": "2026-08-28T19:40:43.493229+00:00",
+    "runtime_minutes_approx": 49,
+    "solver_model": "unsloth/Qwen3.8-27B-GGUF:UD-Q4_K_XL",
+    "judge_model": "unsloth/Qwen3.8-27B-GGUF:UD-Q4_K_XL",
+    "baseline_ndcg_at_5": 0.997,
+    "solver_ndcg_at_5": 0.9957,
+    "delta_ndcg_at_5": -0.0013,
+    "baseline_mean_latency_seconds": 187.082,
+    "solver_mean_latency_seconds": 106.586,
+    "latency_reduction": 0.4303,
+    "baseline_total_tokens": 987578,
+    "solver_total_tokens": 830575,
+    "token_reduction": 0.159,
+    "baseline_read_now_evidence": {"verified": 72, "total": 72, "rate": 1.0},
+    "solver_read_now_evidence": {"verified": 80, "total": 80, "rate": 1.0},
+    "failures": {"hydration": 0, "total": 0, "partial_cases": 0},
+    "solver_evidence_retries": 3,
+    "api_cost_usd": 0,
+    "energy_cost": "unpriced local hardware/electricity"
+  },
+  "per_case": [
+    {"case_id": "case-01", "baseline_ndcg_at_5": 1.0, "solver_ndcg_at_5": 0.9789, "baseline_latency_seconds": 104.0183, "solver_latency_seconds": 93.9125, "baseline_tokens": 92290, "solver_tokens": 73663, "baseline_evidence": "4/4", "solver_evidence": "8/8", "retry_count": 1, "failures": 0},
+    {"case_id": "case-02", "baseline_ndcg_at_5": 1.0, "solver_ndcg_at_5": 0.9829, "baseline_latency_seconds": 196.0928, "solver_latency_seconds": 102.0042, "baseline_tokens": 98414, "solver_tokens": 77872, "baseline_evidence": "8/8", "solver_evidence": "8/8", "retry_count": 0, "failures": 0},
+    {"case_id": "case-03", "baseline_ndcg_at_5": 0.9697, "solver_ndcg_at_5": 0.9947, "baseline_latency_seconds": 213.2704, "solver_latency_seconds": 141.323, "baseline_tokens": 101442, "solver_tokens": 104967, "baseline_evidence": "10/10", "solver_evidence": "10/10", "retry_count": 1, "failures": 0},
+    {"case_id": "case-04", "baseline_ndcg_at_5": 1.0, "solver_ndcg_at_5": 1.0, "baseline_latency_seconds": 230.1476, "solver_latency_seconds": 149.4053, "baseline_tokens": 112940, "solver_tokens": 117596, "baseline_evidence": "10/10", "solver_evidence": "12/12", "retry_count": 0, "failures": 0},
+    {"case_id": "case-05", "baseline_ndcg_at_5": 1.0, "solver_ndcg_at_5": 1.0, "baseline_latency_seconds": 182.9754, "solver_latency_seconds": 84.892, "baseline_tokens": 99766, "solver_tokens": 70310, "baseline_evidence": "8/8", "solver_evidence": "6/6", "retry_count": 0, "failures": 0},
+    {"case_id": "case-06", "baseline_ndcg_at_5": 1.0, "solver_ndcg_at_5": 1.0, "baseline_latency_seconds": 252.9101, "solver_latency_seconds": 138.5667, "baseline_tokens": 118269, "solver_tokens": 122371, "baseline_evidence": "10/10", "solver_evidence": "12/12", "retry_count": 0, "failures": 0},
+    {"case_id": "case-07", "baseline_ndcg_at_5": 1.0, "solver_ndcg_at_5": 1.0, "baseline_latency_seconds": 129.1593, "solver_latency_seconds": 45.3111, "baseline_tokens": 83936, "solver_tokens": 37413, "baseline_evidence": "4/4", "solver_evidence": "4/4", "retry_count": 0, "failures": 0},
+    {"case_id": "case-08", "baseline_ndcg_at_5": 1.0, "solver_ndcg_at_5": 1.0, "baseline_latency_seconds": 223.2838, "solver_latency_seconds": 176.4027, "baseline_tokens": 106935, "solver_tokens": 129519, "baseline_evidence": "8/8", "solver_evidence": "12/12", "retry_count": 1, "failures": 0},
+    {"case_id": "case-09", "baseline_ndcg_at_5": 1.0, "solver_ndcg_at_5": 1.0, "baseline_latency_seconds": 161.0396, "solver_latency_seconds": 42.7642, "baseline_tokens": 95231, "solver_tokens": 34158, "baseline_evidence": "4/4", "solver_evidence": "4/4", "retry_count": 0, "failures": 0},
+    {"case_id": "case-10", "baseline_ndcg_at_5": 1.0, "solver_ndcg_at_5": 1.0, "baseline_latency_seconds": 177.9228, "solver_latency_seconds": 91.2786, "baseline_tokens": 78355, "solver_tokens": 62706, "baseline_evidence": "6/6", "solver_evidence": "4/4", "retry_count": 0, "failures": 0}
+  ],
+  "judge_diagnostics": {"paired_judgments": 60, "agreements": 60, "disagreements": 0, "tie_breaks": 0, "agreement_rate": 1.0, "passes": 2, "seeds": [42, 43, 44], "temperature": 0.1, "model": "unsloth/Qwen3.8-27B-GGUF:UD-Q4_K_XL", "limitation": "The same local model supplied both labels and solver outputs; this is not an independent external judge."},
+  "prompt_hashes": {"baseline": "64f6fc7a033a2e327f8f040948cc8ccb17fca5253d94a9dc07f2a8ff048aaf0a", "solver": "df042e950cfe9bc50236a37432c8f5cabf349adefe551b24f910dba0333192b4"},
+  "artifacts": {
+    "final_runtime_artifact": {"filename": "evaluation-20260828T194043493300Z-0c28b4fed1d94556871b04d79ac459df.json", "sha256": "9c8762eac63b42da985ca330af4665d0a0811a7ff0acc04b152cf5ce5249099a", "runtime_only": true},
+    "frozen_labels": {"filename": "data/benchmark-labeled-1.0.json", "sha256": "5d307e4ee32e8eee63161ccba7e49ac02c674ee984018a89ac8ed26ce5511758", "published": true}
+  },
+  "failed_iteration": {"filename": "evaluation-20260828T182854812657Z.json", "runtime_only": true, "baseline_ndcg_at_5": 0.9995, "solver_ndcg_at_5": 0.9923, "delta_ndcg_at_5": -0.0071, "baseline_mean_latency_seconds": 218.1011, "solver_mean_latency_seconds": 149.6763, "solver_read_now_evidence": "53/72", "reported_retry_count": 0, "lesson": "The initial run undercounted evidence retries; the final run and contract now persist them."},
+  "retry_summary": {"final_solver_evidence_retries": 3, "final_failures": 0, "case_03_retry": "One rejected quotation was replaced with a fresh contiguous span.", "accounting_fix": "Retry counts include proactive evidence retries and are included in case and aggregate totals."},
+  "engineering_iterations": [
+    {"experiment": "maxLength schema grammar", "observation": "The compatible server rejected maxLength grammar", "decision": "Strip maxLength only from compatible request schemas; retain Pydantic validation."},
+    {"experiment": "stitched quotations", "observation": "A stitched/non-contiguous quote failed exact page verification", "decision": "Require contiguous spans and send verifier feedback for a fresh retry."},
+    {"experiment": "SQLite run collision", "observation": "Repeated evaluations reused run IDs", "decision": "Prefix evaluation run IDs with the report identity."}
+  ],
+  "hot_take": "Long-context direct prompting saturated relevance on this benchmark. Purposeful orchestration's measured contribution was parallel latency reduction and evidence enforcement, not simply adding more roles."
+}
